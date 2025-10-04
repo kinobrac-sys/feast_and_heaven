@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Position(models.Model):
-    numeration = models.PositiveIntegerField()
-    name = models.CharField(max_length=100)
+class Dish(models.Model):
+    numeration = models.PositiveIntegerField(unique=True)
+    name = models.CharField(max_length=100, verbose_name="Назва блюда"  )
     description = models.TextField()
     category1 = [
         ("Перше блюдо", "Перше блюдо"),
@@ -18,43 +18,36 @@ class Position(models.Model):
     category = models.CharField(max_length=100, choices=category1)
     price = models.PositiveIntegerField(default=150)
 
+    def __str__(self):
+        return self.name
 
+class Shopcart(models.Model):
+    item = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
 
-
-
-
-class Reservation(models.Model):
-    stravu = models.ForeignKey(Position, on_delete=models.CASCADE)
-    reservator = models.ForeignKey(User, on_delete=models.CASCADE)
-    tables = [
-        ("1", "1"),
-        ("2", "2"),
-        ("3", "3"),
-        ("4", "4"),
-        ("5", "5"),
-        ("6", "6"),
-        ("7", "7"),
-        ("8", "8"),
-        ("9", "9"),
-        ("10", "10"),
-        ("11", "11"),
-        ("12", "12"),
-        ("13", "13"),
-    ]
-    tables = models.CharField(max_length=100, choices=tables, default="1")
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
-    date_n_time = models.DateTimeField()
-    time_of_reservation = models.DateTimeField(auto_now_add=True)
-    people = [
-        ("1", "1"),
-        ("2", "2"),
-        ("3", "3"),
-        ("4", "4"),
-        ("5", "5"),
-        ("6", "6"),
-    ]
-    number_of_people = models.PositiveIntegerField(choices=people, default="1")
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['item', 'user'], name='unique_item_user')
+        ]
 
     def __str__(self):
-        return f"Reservation for {self.name} on {self.date_n_time}"
+        return f"{self.quantity}  {self.item.name} для {self.user.username}"
+    
+
+
+"""class LastStep(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    carts = models.ManyToManyField(Shopcart)
+    total_price = models.PositiveIntegerField(default=0)
+
+    def update_total_price(self):
+        for i in self.carts:
+            self.total_price = self.Dish.price * self.Shopcart.quantity
+            total_price = models.Sum(total_price, )
+
+    
+
+    def __str__(self):
+        return f"Заказ для {self.user.username} - Загальна сума: {self.total_price}" """
