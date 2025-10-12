@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from hunger import forms
 from hunger.models import Dish, Shopcart
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
@@ -18,7 +18,7 @@ class DishDetailView(DetailView):
     template_name = 'dish_view.html'
     context_object_name = 'dish'
 
-class  ShopcartView(LoginRequiredMixin, ListView):
+"""class  ShopcartView(LoginRequiredMixin, ListView):
     model = Shopcart
     template_name = 'shopcart.html'
     context_object_name = 'shopcart'
@@ -37,8 +37,4 @@ class  ShopcartView(LoginRequiredMixin, ListView):
 
         return queryset
             
-
-class ShopCartAddView(DetailView):
-    model = Shopcart
-    template_name = 'shopcart_add.html'
-    context_object_name = 'shopcart_add'
+"""

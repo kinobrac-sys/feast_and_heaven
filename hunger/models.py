@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Dish(models.Model):
     numeration = models.PositiveIntegerField(unique=True)
-    name = models.CharField(max_length=100, verbose_name="Назва блюда"  )
+    name = models.CharField(max_length=100, verbose_name="Назва блюда")
     description = models.TextField()
     category1 = [
         ("Перше блюдо", "Перше блюдо"),
@@ -17,7 +17,7 @@ class Dish(models.Model):
     ]
     category = models.CharField(max_length=100, choices=category1)
     price = models.PositiveIntegerField(default=150)
-    image = models.ImageField(upload_to='media/', blank=True, null=True)
+    image = models.ImageField(upload_to='media', blank=True, null=True)
 
     def __str__(self):
         return self.name

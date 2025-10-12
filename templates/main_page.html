@@ -6,13 +6,12 @@
         <div class = "dish_list" >
             {% for dish in dishes %}
                 <div class="card" style="width: 18rem;">
-                      <img src="{{Dish.image.url}}" class="card-img-top" alt="...">
+                      <img src="{{dish.image.url}}" class="card-img-top" alt="">
                       <div class="card-body">
-                        <h5 class="card-title">Dish {{dish.numeration}}</h5>
+                        <H4>{{dish.name}}</H4>
                           <span class="badge rounded-pill text-bg-warning">{{dish.category}}</span>
-                        <p class="card-text">{{dish.description}}</p>
-                          <h6>Price: {{dish.price}} ₴</h6>
-                        <a href="{% url 'dish_detail' dish.pk %}" class="btn btn-info">Look closer</a>
+                          <h6>Ціна: {{dish.price}} ₴</h6>
+                        <a href="{% url 'dish_detail' dish.pk %}" class="btn btn-info">Оглянути</a>
                       </div>
                     </div>
             {% empty %}

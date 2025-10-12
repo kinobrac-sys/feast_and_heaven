@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import RegisterForm, LoginForm
 
 def register_page(request):
-    form = UserCreationForm()
+    form = RegisterForm()
     if request.method =="POST":
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dish_list')
+            return redirect('main_page')
     context = {
         "form": form
     }
@@ -17,13 +17,13 @@ def register_page(request):
     return render(request, template_name="register.html", context=context)
 
 def login_page(request):
-    form = AuthenticationForm()
+    form = LoginForm()
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dish_list')
+            return redirect('main_page')
         else:
             print(form.errors)
     context = {

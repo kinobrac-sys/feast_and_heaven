@@ -2,7 +2,6 @@
     <div class="container">
         <a class="navbar-brand" href="#">
             {% load static %}
-            <i class="bi bi-journal-bookmark-fill"></i>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -12,19 +11,20 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'main_page' %}"><i class="bi bi-house-door"></i>Головна</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="{% url 'logout-page' %}" class="nav-link"><i class="bi bi-box-arrow-in-left"></i>Logout</a>
+                    <a href="{% url 'logout-page' %}" class="nav-link"><i class="bi bi-box-arrow-in-left"></i>Логаут </a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a href="{% url 'login-page' %}" class="nav-link active">Login</a>
+                    <a href="{% url 'login-page' %}" class="nav-link active">Логін</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'register-page' %}" class="nav-link active">Register</a>
+                    <a href="{% url 'register-page' %}" class="nav-link active">Реєстрація</a>
                 </li>
                 {% endif %}
-
             </ul>
         </div>
     </div>
