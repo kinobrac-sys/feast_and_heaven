@@ -15,7 +15,7 @@ class DishView(ListView):
 
 class DishDetailView(DetailView):
     model = Dish
-    template_name = 'dish_detail.html'
+    template_name = 'dish_view.html'
     context_object_name = 'dish'
 
 class  ShopcartView(LoginRequiredMixin, ListView):

@@ -1,5 +1,5 @@
 from django import forms
-from hunger.models import Shopcart, Reservation
+from hunger.models import Shopcart
 
 class ShopcartForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

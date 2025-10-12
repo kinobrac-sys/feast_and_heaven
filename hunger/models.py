@@ -17,6 +17,7 @@ class Dish(models.Model):
     ]
     category = models.CharField(max_length=100, choices=category1)
     price = models.PositiveIntegerField(default=150)
+    image = models.ImageField(upload_to='media/', blank=True, null=True)
 
     def __str__(self):
         return self.name

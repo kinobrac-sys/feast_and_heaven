@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+    {% block content %}
+
+
+    <h1>ыыы</h1>
+        <div class = "dish_list" >
+            {% for dish in dishes %}
+                <div class="card" style="width: 18rem;">
+                      <img src="{{Dish.image.url}}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Dish {{dish.numeration}}</h5>
+                          <span class="badge rounded-pill text-bg-warning">{{dish.category}}</span>
+                        <p class="card-text">{{dish.description}}</p>
+                          <h6>Price: {{dish.price}} ₴</h6>
+                        <a href="{% url 'dish_detail' dish.pk %}" class="btn btn-info">Look closer</a>
+                      </div>
+                    </div>
+            {% empty %}
+                <p>no dishes SAJ</p>
+            {% endfor %}
+        </div>
+    {% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Dish, LastStep, Shopcart
+from .models import Dish, Shopcart
 admin.site.register(Dish)
 admin.site.register(Shopcart)
-admin.site.register(LastStep)
+#admin.site.register(LastStep)
