@@ -28,3 +28,13 @@ class CartFilterForm(forms.Form):
         super(CartFilterForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-select'})
+
+class ShopcartUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ShopcartUpdateForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    class Meta:
+        model = Shopcart
+        fields = ['quantity']

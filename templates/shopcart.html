@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+    {% block content %}
+    <h1>Кошик</h1>
+    <a class="btn btn-primary" href="{% url 'shopcart-create' %}" role="button">Створити подію</a>
+<div class="list-group">
+  {% for shopcart in shopcarts %}
+
+
+    
+    <div href="{% url "main_page" %}" class="list-group-item d-flex justify-content-between align-items-center bg-success p-2 text-dark bg-opacity-10" 
+    aria-current="true">
+    <a>Страва/позиція: {{ shopcart.item }},          кількість: {{ shopcart.quantity }}</a>
+      <div>
+        <a class="tip_text">  </a>
+      <a href="{% url 'shopcart-update' shopcart.pk %}" class="btn btn-info"><i class="bi bi-arrow-clockwise"></i></a>
+      <a href="{% url 'shopcart-delete' shopcart.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+      </div>
+
+</div>
+{% endfor %}
+
+    {% endblock %}

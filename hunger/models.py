@@ -25,7 +25,7 @@ class Dish(models.Model):
 class Shopcart(models.Model):
     item = models.ForeignKey(Dish, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Кількість")
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

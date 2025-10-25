@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <h1>Видалити товар з корзини</h1>
+    <form method="post" style="max-width: 400px;">
+        {% csrf_token %}
+        <p>Ви впевнені, що хочете видалити {{ shopcart.item }} з корзини?</p>
+        <button type="submit" class="btn btn-danger">Видалити</button>
+</form>
+    {% endblock %}
