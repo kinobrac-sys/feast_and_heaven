@@ -53,7 +53,6 @@ class ShopcartCreateView(LoginRequiredMixin, CreateView):
         obj.user = self.request.user
         obj.save()
         return super().form_valid(form)
-    #похуй я полагодив
 
     
     
