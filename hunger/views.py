@@ -19,6 +19,16 @@ class DishDetailView(DetailView):
     template_name = 'dish_view.html'
     context_object_name = 'dish'
 
+    def post(self, request, *args, **kwargs):
+        dish = self.get_object()
+        shopcart = Shopcart.objects.filter(item=dish, user=request.user).first()
+        if shopcart:
+            shopcart.quantity += 1
+            shopcart.save()
+        else:
+            Shopcart.objects.create(item=dish, user=request.user, quantity=1)
+        return render(request, 'dish_view.html', {'dish': dish, 'message': 'Додано до кошика!'})
+    
 class  ShopcartView(LoginRequiredMixin, ListView):
     model = Shopcart
     template_name = 'shopcart.html'
@@ -78,4 +88,8 @@ class ShopcartDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'shopcart_delete.html'
     success_url = reverse_lazy('shopcart')
 
-
+class PayView(ListView):
+    template_name = 'tomfoolery.html'
+    
+    def get(self, request):
+        return render(request, 'tomfoolery.html')

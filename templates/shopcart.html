@@ -1,7 +1,7 @@
 {% extends "base.html" %}
     {% block content %}
     <h1>Кошик</h1>
-    <a class="btn btn-primary" href="{% url 'shopcart-create' %}" role="button">Створити подію</a>
+    
 <div class="list-group">
   {% for shopcart in shopcarts %}
 
@@ -12,11 +12,11 @@
     <a>Страва/позиція: {{ shopcart.item }},          кількість: {{ shopcart.quantity }}</a>
       <div>
         <a class="tip_text">  </a>
-      <a href="{% url 'shopcart-update' shopcart.pk %}" class="btn btn-info"><i class="bi bi-arrow-clockwise"></i></a>
+      <a href="{% url 'shopcart-update' shopcart.pk %}" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
       <a href="{% url 'shopcart-delete' shopcart.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
       </div>
 
 </div>
 {% endfor %}
-
+<a href="{% url 'tom'  %}" class="btn btn-secondary my-2 ms-auto " style="max-width: 200px;">Оформити замовлення</a>
     {% endblock %}

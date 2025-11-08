@@ -14,6 +14,12 @@
             </div>
             <div class="col">
             <div class="row"><img src="{{dish.image.url}}" class="card-img-top" alt="q"></div>
-            <a href="" class="btn btn-primary">Замовити</a>
+            <div class ="col my-3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Замовити</button>
+            </form>
+            <a> </a>
+            </div>
             </div>
   {% endblock %}
