@@ -33,9 +33,16 @@ class Shopcart(models.Model):
             models.UniqueConstraint(fields=['item', 'user'], name='unique_item_user')
         ]
 
+    def get_total_price(self):
+        return self.item.price * self.quantity
+
     def __str__(self):
         return f"{self.quantity}  {self.item.name} для {self.user.username}"
     
+
+
+
+
 
 
 """class LastStep(models.Model):
@@ -52,3 +59,22 @@ class Shopcart(models.Model):
 
     def __str__(self):
         return f"Заказ для {self.user.username} - Загальна сума: {self.total_price}" """
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50, verbose_name="Ім'я")
+    last_name = models.CharField(max_length=50, verbose_name="Прізвище")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    address = models.CharField(max_length=255, verbose_name="Адреса")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Замовлення {self.id} для {self.user.username}"
+    
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def get_total_price(self):
+        return self.dish.price * self.quantity

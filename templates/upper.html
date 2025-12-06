@@ -13,6 +13,9 @@
                 
                 </li>
                 <a class="nav-link active" href="{% url 'shopcart' %}"> <i class="bi bi-cart"></i>Кошик</a>
+                <li class="nav-item">
+                    <a href="{% url 'order' %}" class="nav-link active">Адмінка</a>
+                </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
@@ -26,6 +29,7 @@
                 <li class="nav-item">
                     <a href="{% url 'register-page' %}" class="nav-link active">Реєстрація</a>
                 </li>
+                
                 {% endif %}
             </ul>
         </div>

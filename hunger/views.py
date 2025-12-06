@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from hunger import forms
-from hunger.models import Dish, Shopcart
+from hunger.models import Dish, Order, Shopcart, OrderItem, Order
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -33,10 +33,14 @@ class  ShopcartView(LoginRequiredMixin, ListView):
     model = Shopcart
     template_name = 'shopcart.html'
     context_object_name = 'shopcarts'
+    login_url = reverse_lazy('login-page')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = forms.ShopcartForm()
+        shopcarts = self.get_queryset()
+        total_price = sum([shopcart.get_total_price() for shopcart in shopcarts])
+        context['total_price'] = total_price
         return context
 
     def get_queryset(self):
@@ -47,6 +51,7 @@ class  ShopcartView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(item__category=category)
 
         return queryset
+
     
 
 class ShopcartCreateView(LoginRequiredMixin, CreateView):
@@ -54,6 +59,7 @@ class ShopcartCreateView(LoginRequiredMixin, CreateView):
     form_class = forms.ShopcartForm
     template_name = 'shopcart_create.html'
     success_url = reverse_lazy('shopcart')
+    login_url = reverse_lazy('login-page')
     
     def get_queryset(self):
         return Shopcart.objects.filter(user=self.request.user)
@@ -71,6 +77,7 @@ class ShopcartUpdateView(LoginRequiredMixin, UpdateView):
     form_class = forms.ShopcartUpdateForm
     template_name = 'shopcart_update.html'
     success_url = reverse_lazy('shopcart')
+    login_url = reverse_lazy('login-page')
 
     def get_queryset(self):
         return Shopcart.objects.filter(user=self.request.user)
@@ -93,3 +100,40 @@ class PayView(ListView):
     
     def get(self, request):
         return render(request, 'tomfoolery.html')
+
+
+'''def create_order(request):
+    shopcarts = Shopcart.objects.filter(user=request.user)
+    for cart in shopcarts:
+        Order.objects.create(carter=cart, user=request.user)
+    #shopcarts.delete()
+    return render(request, 'order_created.html')'''
+
+
+class CreateOrderView(LoginRequiredMixin, CreateView):
+    model = Order
+    form_class = forms.OrderForm
+    template_name = 'order.html'
+    context_object_name = 'orders'
+    login_url = reverse_lazy('login-page')
+    success_url = reverse_lazy('main_page')
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        order = form.save()
+        shopcarts = Shopcart.objects.filter(user=user)
+        for cart in shopcarts:
+            OrderItem.objects.create(
+                order=order,
+                dish=cart.item,
+                quantity=cart.quantity
+            )
+        return super().form_valid(form)
+    
+    
+    
+
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)

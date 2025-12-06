@@ -10,5 +10,6 @@ urlpatterns = [
     path('shopcart-create/', views.ShopcartCreateView.as_view(), name='shopcart-create'),
     path("shopcart-update/<int:pk>/", views.ShopcartUpdateView.as_view(), name="shopcart-update"),
     path("shopcart-delete/<int:pk>/", views.ShopcartDeleteView.as_view(), name="shopcart-delete"),
-    path('tom', views.PayView.as_view(), name='tom')
+    path('tom', views.PayView.as_view(), name='tom'),
+    path('order', views.CreateOrderView.as_view(), name='order'),
 ]

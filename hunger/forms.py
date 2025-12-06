@@ -1,5 +1,5 @@
 from django import forms
-from hunger.models import Shopcart
+from hunger.models import Order, Shopcart
 
 class ShopcartForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -11,6 +11,16 @@ class ShopcartForm(forms.ModelForm):
         model = Shopcart
         fields = ['item', 'quantity']
 
+
+class OrderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    class Meta:
+        model = Order
+        fields = ['first_name', 'last_name', 'address', 'phone']
 
 class CartFilterForm(forms.Form):
     category_choise = [
