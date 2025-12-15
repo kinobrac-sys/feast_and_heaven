@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Деталі замовлення</h1>
+
+{% for order in orders %}
+    <div>
+        
+        
+        {% for item in order.items.all %}
+        <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        ID замовлення: {{ order.id }}
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Блюдо:</strong> {{ item.dish.name }} <br>
+        <strong>Кількість:</strong> {{ item.quantity }} <br>
+        <strong>Ціна за одиницю:</strong> {{ item.dish.price }} ₴ <br>
+        <strong>Загальна вартість:</strong> {{ item.get_total_price }} ₴ <br>
+        <a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Видалити замовлення</a>
+      </div>
+    </div>
+  </div>
+        {% endfor %}
+    </div>
+{% empty %}
+    <p>Замовленнь не знайдено.</p>
+{% endfor %}
+
+
+
+
+
+
+{% endblock %}

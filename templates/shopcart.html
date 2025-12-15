@@ -20,5 +20,5 @@
 {% endfor %}
 </div>
 <div class="alert alert-dark" role="alert" style="max-width: 230px; margin-top: 20px; max-height: 100px;" class="my-2 ms-auto">Загальна вартість: {{ total_price }} ₴</div>
-<a href="{% url 'tom'  %}" class="btn btn-secondary my-2 ms-auto " style="max-width: 200px;">Оформити замовлення</a>
+<a href="{% url 'order' %}" class="btn btn-secondary my-2 ms-auto " style="max-width: 200px;">Створити замовлення</a>
     {% endblock %}

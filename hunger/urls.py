@@ -12,4 +12,6 @@ urlpatterns = [
     path("shopcart-delete/<int:pk>/", views.ShopcartDeleteView.as_view(), name="shopcart-delete"),
     path('tom', views.PayView.as_view(), name='tom'),
     path('order', views.CreateOrderView.as_view(), name='order'),
+    path('view_order', views.ViewOrder.as_view(), name='view_order'),
+    path('delete_order/<int:pk>/', views.DeleteOrderView.as_view(), name='delete_order'),
 ]

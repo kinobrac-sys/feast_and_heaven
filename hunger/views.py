@@ -18,8 +18,10 @@ class DishDetailView(DetailView):
     model = Dish
     template_name = 'dish_view.html'
     context_object_name = 'dish'
+    login_url = reverse_lazy('login-page')
 
     def post(self, request, *args, **kwargs):
+        login_url = reverse_lazy('login-page')
         dish = self.get_object()
         shopcart = Shopcart.objects.filter(item=dish, user=request.user).first()
         if shopcart:
@@ -116,7 +118,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
     template_name = 'order.html'
     context_object_name = 'orders'
     login_url = reverse_lazy('login-page')
-    success_url = reverse_lazy('main_page')
+    success_url = reverse_lazy('view_order')
 
     def form_valid(self, form):
         user = self.request.user
@@ -137,3 +139,19 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+class ViewOrder(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'view_order.html'
+    context_object_name = 'orders'
+    login_url = reverse_lazy('login-page')
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+    
+
+class DeleteOrderView(LoginRequiredMixin, DeleteView):
+    model = Order
+    template_name = 'delete_order.html'
+    success_url = reverse_lazy('view_order')
+    login_url = reverse_lazy('login-page')
+    

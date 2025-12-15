@@ -14,7 +14,19 @@
                 </li>
                 <a class="nav-link active" href="{% url 'shopcart' %}"> <i class="bi bi-cart"></i>Кошик</a>
                 <li class="nav-item">
-                    <a href="{% url 'order' %}" class="nav-link active">Адмінка</a>
+                    
+                </li>
+                <li>
+                    <div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Операціії з замовленнями
+  </a>
+
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'view_order' %}">Переглянути замовлення</a></li>
+    <li><a class="dropdown-item" href="{% url 'order' %}">Створити нове замовлення</a></li>
+  </ul>
+            </div>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
