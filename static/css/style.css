@@ -1,0 +1,14 @@
+.dish_list {
+display:flex;
+gap: 20px;
+flex-wrap:wrap; 
+
+}
+
+.tip_text {
+
+
+font-size: xx-small;
+color: grey ;
+
+}

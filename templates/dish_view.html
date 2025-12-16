@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+    {% block content %}
+    <h1>{{ dish.name }}</h1>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card">
+                
+                <div class="card-body">
+                    <h5 class="card-title"><span class="text text-danger">Блюдо номер {{ dish.numeration }}</span></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Вид блюда: {{ dish.category }}</h6>
+                    <p class="card-text">Опис та його складова: {{ dish.description }}</p>
+                </div>
+                </div>
+            </div>
+            <div class="col">
+            <div class="row"><img src="{{dish.image.url}}" class="card-img-top" alt="q"></div>
+            <div class ="col my-3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Замовити</button>
+            </form>
+            <a> </a>
+            </div>
+            </div>
+  {% endblock %}

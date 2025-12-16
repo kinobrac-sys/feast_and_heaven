@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+    {% block content %}
+
+
+    <h1></h1>
+        <div class ="dish_list" style="display: flex; flex-wrap: wrap; gap: 20px;">
+            {% for dish in dishes %}
+                <div class="card" style="width: 18rem;">
+                      <img src="{{dish.image.url}}" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <H4>{{dish.name}}</H4>
+                          <span class="badge rounded-pill text-bg-warning">{{dish.category}}</span>
+                          <h6>Ціна: {{dish.price}} ₴</h6>
+                        <a href="{% url 'dish_detail' dish.pk %}" class="btn btn-info">Оглянути</a>
+                      </div>
+                    </div>
+            {% empty %}
+                <p>no dishes SAJ</p>
+            {% endfor %}
+        </div>
+    {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{%block content %}
+
+<h1>Ваше замовлення</h1>
+<form action="" method="POST" style="max-width: 400px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Додати замовлення з кошику</button>
+</form>
+
+<div class="list-group border-0"></div>
+    {% for shopcarts in order %}
+    <a href="">pipohuy</a>
+
+
+{% endfor %}
+{% endblock %}
