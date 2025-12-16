@@ -51,8 +51,7 @@ class  ShopcartView(LoginRequiredMixin, ListView):
 
         if category:
             queryset = queryset.filter(item__category=category)
-
-        return queryset
+            return queryset
 
     
 
