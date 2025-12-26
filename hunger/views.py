@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from hunger import forms
 from hunger.models import Dish, Order, Shopcart, OrderItem, Order
@@ -43,7 +43,7 @@ class  ShopcartView(LoginRequiredMixin, ListView):
         shopcarts = self.get_queryset()
         total_price = sum([shopcart.get_total_price() for shopcart in shopcarts])
         context['total_price'] = total_price
-        return context
+        return context 
 
     def get_queryset(self):
         queryset = Shopcart.objects.filter(user=self.request.user)
@@ -51,7 +51,7 @@ class  ShopcartView(LoginRequiredMixin, ListView):
 
         if category:
             queryset = queryset.filter(item__category=category)
-            return queryset
+        return queryset
 
     
 
@@ -156,20 +156,29 @@ class DeleteOrderView(LoginRequiredMixin, DeleteView):
     
 
 def Testcreateorder(request):
+    if request.method == 'POST':
+        form = forms.OrderForm(request.POST)
+        if form.is_valid():
+            # 1. Привязываем пользователя и сохраняем заказ
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
 
-    def form_valid(form):
-        user = request.user
-        form.instance.user = user
-        order = form.save()
-        shopcarts = Shopcart.objects.filter(user=user)
-        for cart in shopcarts:
-            OrderItem.objects.create(
-                order=order,
-                dish=cart.item,
-                quantity=cart.quantity
-            )
+            # 2. Переносим товары из корзины в OrderItem
+            shopcarts = Shopcart.objects.filter(user=request.user)
+            for cart in shopcarts:
+                OrderItem.objects.create(
+                    order=order,
+                    dish=cart.item,
+                    quantity=cart.quantity
+                )
 
-        Shopcart.objects.filter(user=user).delete()
-        return super().form_valid(form)
+            # 3. Очищаем корзину
+            shopcarts.delete()
 
-        return render(request, 'test_create_order.html')
+            return redirect('view_order') # Укажите свой путь после успеха
+    else:
+        # Если это GET запрос — создаем пустую форму
+        form = forms.OrderForm()
+
+    return render(request, 'test_create_order.html', {'form': form})

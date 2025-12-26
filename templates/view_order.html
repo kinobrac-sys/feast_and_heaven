@@ -26,8 +26,10 @@
   </div>
         {% endfor %}
     </div>
-{% empty %}
+{% if none in order.items.all %}
     <p>Замовленнь не знайдено.</p>
+    <a href="{% url 'test_create_order' %}" class="btn btn-primary">Створити нове замовлення</a>
+{% endif %}
 {% endfor %}
 
 
