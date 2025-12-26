@@ -154,3 +154,22 @@ class DeleteOrderView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('view_order')
     login_url = reverse_lazy('login-page')
     
+
+def Testcreateorder(request):
+
+    def form_valid(form):
+        user = request.user
+        form.instance.user = user
+        order = form.save()
+        shopcarts = Shopcart.objects.filter(user=user)
+        for cart in shopcarts:
+            OrderItem.objects.create(
+                order=order,
+                dish=cart.item,
+                quantity=cart.quantity
+            )
+
+        Shopcart.objects.filter(user=user).delete()
+        return super().form_valid(form)
+
+        return render(request, 'test_create_order.html')
